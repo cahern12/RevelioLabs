@@ -3,8 +3,8 @@
 ## Solution #1
 To design an efficient data augmentation service for inferring seniority levels from job postings, the primarily goal is to minimize the number of costly gRPC calls to the Revelio Labs seniority model while ensuring timely process of the JSONL files. Here is a breakdown of the proposed solution
 1. **Overview of the Solution**
-    1. Cacheing Service: This service will cache the results of seniority inferences to avoid redundant gRPC calls for the same (company, title) pairs. The cache should be highly performant, scalable, and able to handle billions of entries efficiently
-    2. Data Augmentation Service: This service will read the JSONL files from the S3 bucket, use the caching service to check if a seniority level is already available for a given (company, title) pair, make gRPC calls when necessary, and write the output with seniority information back to another S3 bucket.
+    1. **Cacheing Service**: This service will cache the results of seniority inferences to avoid redundant gRPC calls for the same (company, title) pairs. The cache should be highly performant, scalable, and able to handle billions of entries efficiently
+    2. **Data Augmentation Service**: This service will read the JSONL files from the S3 bucket, use the caching service to check if a seniority level is already available for a given (company, title) pair, make gRPC calls when necessary, and write the output with seniority information back to another S3 bucket.
 2. **Caching Service Design**
     1. The caching service is critical for minimizing gRPC calls. The choice of caching solution is influenced by factors such as speed, scalability, persistence, and ease of integration. Given the scale (20M distinct pairs in a year), we need a cache that:
         1. Supports high read and write throughput.
@@ -18,10 +18,6 @@ To design an efficient data augmentation service for inferring seniority levels 
     3. Cache Key Design
         1. We use a hash function to prevent excessive key length and ensure fast lookups
         2. The cache key will be in combination of the company and title, normalized to ensure consistency. For example:
-```
-Key: hash("Revelio Labs|Senior Data Engineer - Data Flow")
-Value: 3
-```
 3. **Data Augmentation Service Design**
     1. **Read JASONL Files from S3:** The service will poll the *s3://rl-data/job-postings-raw/* bucket for new files, using S3 event notifications or a scheduled job.
     2. **Batch Processing and Deduplication:**
