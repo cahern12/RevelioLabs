@@ -14,7 +14,7 @@
     1. Bloom filters can be used as a pre-filtering mechanism to check if a (company, title) pair has potentially been seen before without having to query the Redis cache directly. Bloom filters are memory-efficient data structures that provide fast probabilistic membership tests with some acceptable false positive rates but no false negatives.
     2. **Improvements**:
         1. **Bloom Filter in Front of Redis Cache**: Use a Bloom filter that is populated with all (company, title) pairs seen in a certain window (e.g., daily). When processing new entries, check the Bloom filter first. If it indicates that the pair might be in the cache, proceed with the Redis cache lookup; otherwise, skip directly to the gRPC call and cache the result.
-4. Precompute and Cache Common Titles for Popular Companies
+4. **Precompute and Cache Common Titles for Popular Companies**
     1. It might be beneficial to precompute and cache seniority levels for very common titles (e.g., "Software Engineer", "Account Manager") for popular companies (e.g., "Google", "Amazon"). You could periodically run a batch job to update the cache with these precomputed values.
     2. **Improvement**:
         1. **Periodic Cache Precomputation**: Run a background job that analyzes historical data and identifies (company, title) pairs that are frequently requested. Precompute their seniority levels and store them in the cache to avoid future gRPC calls for these pairs.
