@@ -8,6 +8,8 @@ The goal of this solution is to decrease the amount of hits we have going throug
   1. Create batch processing across multiple files within a specified time domain (for example, all files within the last hour).
   2. Implemented Preemptive cacheing with Bloom filters. Bloom filters sit in front of the redis cache.
   3. Precompute and cache common titles for popular companies.
+  4. Leveraging batched redis lookups.
+  5. Batched gRPC calls
 
 For a full list of implementation details, please view the solution #2 directory.
 
