@@ -1,4 +1,4 @@
-# RevelioLabs
+# Solution 1
 
 ## Solution #1
 To design an efficient data augmentation service for inferring seniority levels from job postings, the primarily goal is to minimize the number of costly gRPC calls to the Revelio Labs seniority model while ensuring timely process of the JSONL files. Here is a breakdown of the proposed solution
