@@ -52,7 +52,7 @@ To design an efficient data augmentation service for inferring seniority levels 
         1. Redis: Memory usage depends on the dataset size and the efficiency of storage (e.g., Redis data structures, eviction policies). For 20M entries, with average size and some overhead, this can be in the range of several gigabytes.
         2. Data Augmentation Service: The CPU footprint mainly comes from JSON parsing and batch management. With efficient coding (e.g., using asynchronous I/O and multiprocessing where possible), this can be kept low.
 
-        ## Solution #2
+## Solution #2
         ###### To further decrease the number of gRPC calls in the provided solution, we need to enhance the caching and deduplication strategy. The primary idea is to reduce the frequency and volume of unique (company, title) pairs being sent to the gRPC endpoint. Here are some improvements that can be made to achieve this
         1. **User Batch Processing and Deduplication Across Files**
             1. **Currently**, the algorithm processes files one at a time and deduplicates entries within each file. However, to maximize efficiency, we should consider deduplicating across multiple files within a certain timeframe (e.g., within the last minute, hour, or even daily batch). This would avoid making duplicate gRPC calls for repeated (company, title) pairs that appear in different files
