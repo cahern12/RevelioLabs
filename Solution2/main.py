@@ -29,7 +29,7 @@ def main():
     with ThreadPoolExecutor(max_workers=5) as executor:
         futures = [executor.submit(job_processor.process_files, [file_key]) for file_key in files_to_process]
         for future in as_completed(futures):
-            future.result()  # Handle exceptions if any
+            future.result()
 
 if __name__ == "__main__":
     main()
