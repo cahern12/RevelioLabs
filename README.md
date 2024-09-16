@@ -1,5 +1,13 @@
 # RevelioLabs
 
+## Solution #1 & 2 Updates
+1. I refactored the solutions belows into multiple files / classes:
+    1. **S3Handler**: Handles all S3-related operations, such as reading & writing to S3
+    2. **CacheHandler**: Manages Redis caching operations
+    3. **GRPCClient**: Encapsulates all gRPC related operations
+    4. **JobProcessor**: Orchestrates the job processing workflow, including reading files, deduplication, interacting with the cache, making gRPC calls, and writing results.
+    5. **main.py**: The entry point of initializing all components and coordinating the processing of files using multithreading
+
 ## Solution #1
 To design an efficient data augmentation service for inferring seniority levels from job postings, the primarily goal is to minimize the number of costly gRPC calls to the Revelio Labs seniority model while ensuring timely process of the JSONL files. Here is a breakdown of the proposed solution
 1. **Overview of the Solution**
